@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/expense
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQwOTlkODg2LTBiZjMtNDJiNy05NTZmLTYwOTY2N2QyYjk4NCIsInVzZXJuYW1lIjoiYm9iIiwiaWF0IjoxNjEwNzk1NTUzfQ.klFtIRsYns_MfGZwt60WnY3QAzcIhMqjhVPYH_Z2zfI
+
+{
+  "amount": 123
+}
