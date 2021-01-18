@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled, { css } from 'styled-components';
+import { createExpense } from '../../store/actions/expense';
 
 const Div = styled.div`
   ${({ theme }) =>
@@ -26,7 +28,7 @@ const Input = styled.input`
       color: ${theme.gray5};
       font-size: ${theme.font4};
       background: ${theme.gray2};
-      margin-bottom: ${theme.s2};
+      margin-bottom: ${theme.s4};
       padding: ${theme.s2} ${theme.s2};
       border-radius: ${theme.br3};
       border: 2px solid ${theme.gray2};
@@ -62,10 +64,19 @@ const SubmitBtn = styled.button`
 `;
 
 const ExpenseForm = () => {
+  const dispatch = useDispatch();
   const [expense, setExpense] = useState();
+
+  const inputRef = useRef();
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
+    if (expense) {
+      setExpense('');
+      dispatch(createExpense(expense));
+    } else {
+      inputRef.current.focus();
+    }
   };
 
   const inputChangeHandler = (e) => {
@@ -83,6 +94,8 @@ const ExpenseForm = () => {
             min="0"
             value={expense || ''}
             onChange={inputChangeHandler}
+            ref={inputRef}
+            placeholder="expense"
           />
         </label>
         <SubmitBtn type="submit">ADD EXPENSE</SubmitBtn>

@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 
 const Div = styled.div`
@@ -6,12 +7,14 @@ const Div = styled.div`
 
 const Number = styled.p`
   display: inline-block;
-  font-weight: 400;
   position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: pre-wrap;
   ${({ theme }) =>
     css`
       padding: ${theme.s5};
-      font-size: ${theme.font10};
+      font-size: clamp(${theme.font9}, 8vw, ${theme.font10});
       color: ${theme.gray5};
       ::after {
         content: '';
@@ -19,17 +22,24 @@ const Number = styled.p`
         height: 8px;
         width: 100%;
         background: ${theme.gray3};
-        bottom: 22px;
+        bottom: 12px;
         left: 0;
         border-radius: 10px;
       }
     `}
 `;
 
-const Expense = ({ expense }) => {
+const Expense = () => {
+  const expenses = useSelector((state) => state.expenses);
   return (
     <Div>
-      <Number>{expense}$</Number>
+      <Number>
+        {Math.round(
+          expenses?.reduce((acc, curr) => acc + parseFloat(curr.amount), 0) *
+            100
+        ) / 100 || 0}
+        $
+      </Number>
     </Div>
   );
 };

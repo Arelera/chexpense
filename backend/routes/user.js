@@ -24,6 +24,7 @@ router.get('/init', async (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    console.log('SIGNUP: ', username, password);
 
     // check if username exists
     const response1 = await client.query(
@@ -55,7 +56,7 @@ router.post('/signup', async (req, res, next) => {
       SECRET
     );
 
-    res.status(201).send({ id: response.rows[0].id, username, token });
+    res.status(201).send({ id: response2.rows[0].id, username, token });
   } catch (error) {
     next(error);
   }
@@ -98,6 +99,26 @@ router.post('/login', async (req, res, next) => {
     const token = jwt.sign(response.rows[0], SECRET);
 
     res.send({ ...response.rows[0], token });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/', async (req, res, next) => {
+  try {
+    const token = getTokenFrom(req);
+
+    const decodedUser = jwt.verify(token, SECRET);
+
+    const response = await client.query(
+      `
+      DELETE FROM users_ce
+      WHERE id = $1;
+      `,
+      [decodedUser.id]
+    );
+
+    res.send();
   } catch (error) {
     next(error);
   }

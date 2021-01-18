@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <Div>
       <Date />
-      <Expense expense={'214'} />
+      <Expense />
     </Div>
   );
 };
