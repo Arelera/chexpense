@@ -44,3 +44,22 @@ export const loginUser = (user) => {
     });
   };
 };
+
+export const logoutUser = () => {
+  return async (dispatch) => {
+    localStorage.removeItem('user');
+    dispatch({ type: 'LOGOUT' });
+  };
+};
+
+export const deleteUser = () => {
+  return async (dispatch) => {
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      const { token } = JSON.parse(userJson);
+      localStorage.removeItem('user');
+      userService.deleteOne(token);
+      dispatch({ type: 'DELETE_USER' });
+    }
+  };
+};

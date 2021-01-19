@@ -1,15 +1,22 @@
 import styled from 'styled-components';
 import Date from './Date/Date';
 import Expense from './Expense/Expense';
+import NavMenu from './NavMenu/NavMenu';
 
-const Div = styled.div``;
+const InnerDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const Header = () => {
   return (
-    <Div>
-      <Date />
+    <div>
+      <InnerDiv>
+        <Date />
+        <NavMenu />
+      </InnerDiv>
       <Expense />
-    </Div>
+    </div>
   );
 };
 

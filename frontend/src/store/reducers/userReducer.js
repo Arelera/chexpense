@@ -4,6 +4,9 @@ const reducer = (state = null, action) => {
     case 'SIGNUP':
     case 'LOGIN':
       return action.user;
+    case 'LOGOUT':
+    case 'DELETE_USER':
+      return null;
     default:
       return state;
   }

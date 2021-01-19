@@ -18,8 +18,6 @@ const Title = styled.h1`
     `}
 `;
 
-const Form = styled.form``;
-
 const LabelText = styled.span`
   ${({ theme }) =>
     css`
@@ -31,6 +29,9 @@ const TextInput = styled.input`
   width: 100%;
   outline: none;
   transition: background 0.2s ease, border 0.2s ease;
+  :first-child {
+    display: none;
+  }
   ${({ theme }) =>
     css`
       margin: ${theme.s1} 0 ${theme.s4};
@@ -107,8 +108,13 @@ const UserForm = () => {
   const formSubmitHandler = (e) => {
     e.preventDefault();
     setError('');
+    if (!username || !password) return setError('Please fill in all fields');
     if (isLogin) {
-      dispatch(loginUser({ username, password }));
+      dispatch(loginUser({ username, password })).then((res) => {
+        if (res) {
+          setError(res.error);
+        }
+      });
     } else {
       if (password !== passwordRepeat) {
         return setError('Please enter matching passwords');
@@ -146,7 +152,7 @@ const UserForm = () => {
               placeholder="Password"
             />
           </label>
-          <p>{error}</p>
+          <Error>{error}</Error>
           <Buttons>
             <SubmitBtn type="submit">LOGIN</SubmitBtn>
             <SwitchBtn type="button" onClick={switchHandler}>

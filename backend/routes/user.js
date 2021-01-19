@@ -24,7 +24,6 @@ router.get('/init', async (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    console.log('SIGNUP: ', username, password);
 
     // check if username exists
     const response1 = await client.query(
@@ -66,7 +65,6 @@ router.post('/signup', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body;
-
     const response1 = await client.query(
       `
       SELECT "passwordHash" FROM users_ce

@@ -1,17 +1,20 @@
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-const Button = styled.button`
+const Div = styled.div`
   position: relative;
+  margin: ${({ theme }) => `${theme.s1} ${theme.s2}`};
+`;
+
+const Button = styled.button`
   outline: none;
-  transition: all 0.2s ease;
+  transition: border 0.2s ease;
   ${({ theme }) =>
     css`
       background: none;
       border: 1px solid ${theme.gray2};
       border-radius: ${theme.br1};
       padding: ${theme.s1};
-      margin: ${theme.s2} ${theme.s1};
       font-size: ${theme.font5};
       color: ${theme.gray4};
       :hover,
@@ -36,19 +39,21 @@ const DeleteBtn = styled.button`
       color: ${props.theme.gray2};
       border-radius: ${props.theme.br1};
       font-size: ${props.theme.font5};
-      transform: scale(${props.clicked ? '1.05' : '0'});
+      transform: scale(${props.clicked ? '1' : '0'});
     `}
 `;
 
 const ExpenseLi = ({ amount, deleteHandler }) => {
   const [clicked, setClicked] = useState(false);
   return (
-    <Button onFocus={() => setClicked(true)} onBlur={() => setClicked(false)}>
-      {amount}
+    <Div>
+      <Button onFocus={() => setClicked(true)} onBlur={() => setClicked(false)}>
+        {amount}
+      </Button>
       <DeleteBtn clicked={clicked} onClick={deleteHandler}>
         X
       </DeleteBtn>
-    </Button>
+    </Div>
   );
 };
 

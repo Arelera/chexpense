@@ -26,10 +26,22 @@ const login = async (user) => {
   }
 };
 
+const deleteOne = async (token) => {
+  try {
+    const response = await axios.delete(`${baseUrl}/user`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 const userService = {
   initUser,
   signup,
   login,
+  deleteOne,
 };
 
 export default userService;
